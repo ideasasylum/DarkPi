@@ -21,7 +21,7 @@ Put the darkypi.py script somewhere
 
 Set the environment variables (I put them in `~/.bash_profile`)
 
-```bash
+```shell
 DARKSKY_API="somethingsomething"; export DARKSKY_API
 LAT="50.7"; export LAT
 LON="-10.5"; export LON
@@ -34,11 +34,22 @@ LON="-10.5"; export LON
 ## Scheduling
 
 We want the display to update every hour, and when we power on the device. 
+
+I wrote a little shell script called `run.sh` to hold the environment variables because cron is... awkward
+
+```shell
+DARKSKY_API="something"; export DARKSKY_API
+LAT="50.5"; export LAT
+LON="-8.5"; export LON
+
+python ~/darkpi/darkpi.py
+```
+
 Run `crontab -e` and add these entries to the crontab
 
 ```
-0 * * * * python ~/darkpi/darkpi.py
-@reboot python ~/darkpi/darkpi.py
+0 * * * * /darkpi/run.sh
+@reboot   /darkpi/run.sh
 ```
 
 ## Examples
